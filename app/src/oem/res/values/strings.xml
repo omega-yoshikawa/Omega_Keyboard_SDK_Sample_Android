@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KeyboardSDKTest[OEM]</string>
+    <string name="user_dictionary_export_provider">jp.inc.arouse.keyboardtestapplication.oem.userdictionary.UserDictionaryExportProvider</string>
+</resources>
