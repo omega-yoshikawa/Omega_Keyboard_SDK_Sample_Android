@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(MainFragment.class.getName());
-		if (fragment != null && fragment instanceof MainFragment) {
-			MainFragment mainFragment = (MainFragment)fragment;
-			mainFragment.onWindowFocusChanged(hasFocus);
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag(ActivateFragment.class.getName());
+		if (fragment != null && fragment instanceof ActivateFragment) {
+			ActivateFragment activateFragment = (ActivateFragment)fragment;
+			activateFragment.onWindowFocusChanged(hasFocus);
 		}
 	}
 }

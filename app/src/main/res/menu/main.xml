@@ -4,10 +4,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="設定"
-        app:showAsAction="always" />
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/menu_settings"
+                android:title="設定" />
+
+            <item
+                android:id="@+id/menu_first_settings"
+                android:title="初回設定" />
+
+            <item
+                android:id="@+id/menu_tutorial"
+                android:title="チュートリアル" />
+
+            <item
+                android:id="@+id/menu_activate"
+                android:title="Activate" />
+
+        </menu>
+
+    </item>
 
     <item
         android:icon="@android:drawable/ic_menu_add"

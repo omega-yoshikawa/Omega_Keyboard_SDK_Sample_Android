@@ -12,6 +12,4 @@ public interface Define {
 	String SYMBOL = "ceres_Android";
 	String TOKEN = "4c6fed5b0a1dff9193e486973bae4c1e";
 	String GENIEE_APP_ID = "1165744";
-
-	int REQUEST_CODE_CREATE_THEME = 100;
 }

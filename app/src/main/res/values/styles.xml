@@ -19,6 +19,13 @@
         <item name="actionBarStyle">@style/Widget.ActionBar</item>
     </style>
 
+    <style name="AppTheme.Keyboard.NoActionBar" parent="KeyboardTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar</item>
+    </style>
+
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="titleTextStyle">@style/TextAppearance.Widget.Actionbar.Title</item>
     </style>
