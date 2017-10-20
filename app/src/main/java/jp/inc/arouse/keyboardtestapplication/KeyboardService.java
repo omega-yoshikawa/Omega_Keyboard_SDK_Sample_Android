@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.omega.keyboard.sdk.KeyboardBaseService;
-import com.omega.keyboard.sdk.mozc.MozcBaseService;
 import com.omega_adnetwork.sdk.AdView;
 
 /**
