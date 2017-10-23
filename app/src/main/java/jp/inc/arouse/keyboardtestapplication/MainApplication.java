@@ -67,8 +67,6 @@ public class MainApplication extends KeyboardApplication {
 		return InitializeParameter.newBuilder()
 				.applicationInfo(getString(R.string.app_name), "arouse, inc.", getString(R.string.user_dictionary_export_provider))
 				.adInfo(Define.SYMBOL, Define.TOKEN)
-				.sdkKey(Define.GENIEE_APP_ID)
-				.placementId(Define.FACEBOOK_PLACEMENT_ID)
 				.isDebug(true)
 				.build();
 	}

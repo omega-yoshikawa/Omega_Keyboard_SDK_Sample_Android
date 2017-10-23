@@ -9,10 +9,11 @@ package jp.inc.arouse.keyboardtestapplication;
  */
 
 public interface Define {
-	String SYMBOL = "ceres_Android";
-	String TOKEN = "4c6fed5b0a1dff9193e486973bae4c1e";
-	String GENIEE_APP_ID = "1165744";
-	String FACEBOOK_PLACEMENT_ID = "296858744104658_296858927437973";
 
-	int REQUEST_CODE_CREATE_THEME = 100;
+//	String SYMBOL = "ANYTYPE_Android";
+//	String TOKEN = "351dd0e342cfb9f849045075d2215d18";
+
+	String SYMBOL = "APP1";
+	String TOKEN = "55c342292925c7472240eb53f990b1c0";
+
 }

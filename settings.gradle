@@ -1,1 +1,1 @@
-include ':app', ':MozcJNI', ':OmegaKeyboardSDK-Japan', ':OmegaKeyboardSDK-OEM', ':OmegaAdnetworkSDK-OEM', ':OmegaAdnetworkSDK-Japan'
+include ':app', ':MozcJNI', ':OmegaAdnetworkSDK', ':OmegaKeyboardSDK'
