@@ -113,7 +113,7 @@ public class MainFragment extends Fragment {
 				return true;
 
 			case R.id.menu_settings:
-				keyboardSDK.startSettingsActivityForResult(MainFragment.this, REQUEST_CODE_SETTINGS, null);
+				keyboardSDK.startSettingsActivityForResult(MainFragment.this, REQUEST_CODE_SETTINGS);
 				return true;
 
 			case R.id.menu_first_settings:
