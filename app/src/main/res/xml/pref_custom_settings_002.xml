@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="カスタム設定 [CustomPreference]">
+        <Preference
+            android:key="pref_custom_settings_006"
+            android:summary="ダイアログ表示"
+            android:title="カスタム設定 [6]" />
+
+        <Preference
+            android:key="pref_custom_settings_007"
+            android:summary="画面遷移"
+            android:title="カスタム設定 [7]" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

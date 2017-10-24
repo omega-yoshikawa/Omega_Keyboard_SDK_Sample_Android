@@ -15,6 +15,14 @@
                 android:title="設定" />
 
             <item
+                android:id="@+id/menu_custom_settings_001"
+                android:title="カスタム設定 [SharedPreference]" />
+
+            <item
+                android:id="@+id/menu_custom_settings_002"
+                android:title="カスタム設定 [CustomPreference]" />
+
+            <item
                 android:id="@+id/menu_first_settings"
                 android:title="初回設定" />
 

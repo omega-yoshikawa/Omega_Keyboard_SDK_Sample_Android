@@ -26,11 +26,14 @@ import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 import com.omega.keyboard.sdk.KeyboardSDK;
+import com.omega.keyboard.sdk.fragment.settings.SettingsFragment;
 import com.omega.keyboard.sdk.model.CustomTheme;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,6 +117,19 @@ public class MainFragment extends Fragment {
 
 			case R.id.menu_settings:
 				keyboardSDK.startSettingsActivityForResult(MainFragment.this, REQUEST_CODE_SETTINGS);
+				return true;
+
+			case R.id.menu_custom_settings_001:
+				ArrayList<Integer> addContents = Lists.newArrayList(
+						R.xml.pref_custom_settings_001
+				);
+				SettingsFragment settingsFragment = SettingsFragment.newInstance(addContents);
+				showFragment(settingsFragment);
+				return true;
+
+			case R.id.menu_custom_settings_002:
+				CustomSettingsFragment customSettingsFragment = CustomSettingsFragment.newInstance();
+				showFragment(customSettingsFragment);
 				return true;
 
 			case R.id.menu_first_settings:

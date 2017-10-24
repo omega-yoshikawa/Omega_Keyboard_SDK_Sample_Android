@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="カスタム設定 [SharedPreference]">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_custom_settings_001"
+            android:summary="CheckBoxPreference"
+            android:title="カスタム設定 [1]" />
+
+        <ListPreference
+            android:entries="@array/pref_custom_settings_002_entries"
+            android:entryValues="@array/pref_custom_settings_002_entry_values"
+            android:key="pref_custom_settings_002"
+            android:summary="ListPreference"
+            android:title="カスタム設定 [2]" />
+
+        <EditTextPreference
+            android:defaultValue="テスト"
+            android:key="pref_custom_settings_003"
+            android:summary="EditTextPreference"
+            android:title="カスタム設定 [3]" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_custom_settings_004"
+            android:summary="SwitchPreference"
+            android:title="カスタム設定 [4]" />
+
+        <MultiSelectListPreference
+            android:entries="@array/pref_custom_settings_005_entries"
+            android:entryValues="@array/pref_custom_settings_005_entry_values"
+            android:key="pref_custom_settings_005"
+            android:summary="MultiSelectListPreference"
+            android:title="カスタム設定 [5]" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
