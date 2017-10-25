@@ -1,9 +1,15 @@
 package jp.inc.arouse.keyboardtestapplication;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.Preference;
 
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.common.collect.Lists;
 import com.omega.keyboard.sdk.fragment.dialog.alert.AlertDialogFragment;
 import com.omega.keyboard.sdk.fragment.settings.SettingsFragment;
@@ -25,7 +31,8 @@ public class CustomSettingsFragment extends SettingsFragment {
 		CustomSettingsFragment fragment = new CustomSettingsFragment();
 
 		ArrayList<Integer> addContents = Lists.newArrayList(
-				R.xml.pref_custom_settings_002
+				R.xml.pref_custom_settings_002,
+				R.xml.pref_custom_settings_003
 		);
 
 		Bundle args = new Bundle();
@@ -36,8 +43,8 @@ public class CustomSettingsFragment extends SettingsFragment {
 	}
 
 	@Override
-	protected void updatePreference() {
-		super.updatePreference();
+	protected void updatePreferences() {
+		super.updatePreferences();
 
 		Preference preference = findPreference("pref_custom_settings_006");
 		if (preference != null) {
@@ -71,6 +78,52 @@ public class CustomSettingsFragment extends SettingsFragment {
 				}
 			});
 		}
+
+		preference = findPreference(SharedPrefKey.AD_VIEW_BACKGROUND_COLOR);
+		if (preference != null) {
+			preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					onClickColorPickerPreference(preference);
+					return true;
+				}
+			});
+		}
+
+		preference = findPreference(SharedPrefKey.AD_VIEW_TEXT_COLOR);
+		if (preference != null) {
+			preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					onClickColorPickerPreference(preference);
+					return true;
+				}
+			});
+		}
+
 	}
 
+	private void onClickColorPickerPreference(Preference preference) {
+		final SharedPreferences sharedPreferences = preference.getSharedPreferences();
+		final String key = preference.getKey();
+		int color = sharedPreferences.getInt(key, Color.WHITE);
+		ColorPickerDialogBuilder.with(getContext())
+				.setTitle(preference.getTitle().toString())
+				.initialColor(color)
+				.showColorPreview(true)
+				.showAlphaSlider(true)
+				.showLightnessSlider(true)
+				.wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+				.setPositiveButton("決定", new ColorPickerClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+						sharedPreferences.edit()
+								.putInt(key, selectedColor)
+								.apply();
+					}
+				})
+				.setNegativeButton("キャンセル", null)
+				.build()
+				.show();
+	}
 }

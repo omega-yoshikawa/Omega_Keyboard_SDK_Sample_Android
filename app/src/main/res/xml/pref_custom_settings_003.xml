@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="広告SDK設定">
+
+        <Preference
+            android:key="pref_ad_view_background_color"
+            android:summary="AdViewの背景色"
+            android:title="背景色" />
+
+        <Preference
+            android:key="pref_ad_view_text_color"
+            android:summary="AdViewの文字色"
+            android:title="文字色" />
+
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/pref_ad_view_suggest_count_entries"
+            android:entryValues="@array/pref_ad_view_suggest_count_entry_values"
+            android:key="pref_ad_view_suggest_count"
+            android:summary="サジェスト広告時に表示する項目数"
+            android:title="サジェスト広告の表示数" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
