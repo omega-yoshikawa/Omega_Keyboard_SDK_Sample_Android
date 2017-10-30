@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "jp.inc.arouse.keyboardtestapplication"
         minSdkVersion 16
@@ -27,36 +27,42 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:preference-v7:25.4.0'
-    compile 'com.android.support:preference-v14:25.4.0'
-    compile 'com.takisoft.fix:preference-v7:25.4.0.3'
-    compile 'com.google.android.gms:play-services-ads:11.2.2'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.google.guava:guava:22.0-android'
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
-    compile 'com.google.protobuf:protobuf-java:3.0.0'
-
     //-----------------------
     // sdk
     //-----------------------
-    compile project(':MozcJNI')
-    compile project(':OmegaAdnetworkSDK')
-    compile project(':OmegaKeyboardSDK')
+    implementation project(':MozcJNI')
+    implementation project(':OmegaAdnetworkSDK')
+    implementation project(':OmegaKeyboardSDK')
+
+
+    //-----------------------
+    // mozc
+    //-----------------------
+    implementation 'com.google.protobuf:protobuf-java:3.0.0'
+
 
     //-----------------------
     // app
     //-----------------------
+    // support
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    // play services
+    implementation 'com.google.android.gms:play-services-ads:11.4.2'
+    // Preference
+    implementation 'com.takisoft.fix:preference-v7:25.4.0.3'
+    // guava
+    implementation 'com.google.guava:guava:23.2-android'
     // Logger
-    compile 'com.orhanobut:logger:2.1.1'
+    implementation 'com.orhanobut:logger:2.1.1'
     // Bolts
-    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    implementation 'com.parse.bolts:bolts-tasks:1.4.0'
     // Lombok
-    compile 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
+    compileOnly 'org.projectlombok:lombok:1.16.18'
     // EventBus
-    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
     // CropImage
-    compile 'com.naver.android.helloyako:imagecropview:1.2.0'
+    implementation 'com.naver.android.helloyako:imagecropview:1.2.0'
     // ColorPicker
-    compile 'com.github.QuadFlask:colorpicker:0.0.13'
+    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
 }
