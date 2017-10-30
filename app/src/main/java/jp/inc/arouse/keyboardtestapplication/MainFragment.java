@@ -415,7 +415,6 @@ public class MainFragment extends Fragment {
 				break;
 
 			default:
-				super.onActivityResult(requestCode, resultCode, data);
 				break;
 		}
 	}
