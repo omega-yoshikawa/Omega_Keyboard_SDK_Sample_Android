@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.omega.keyboard.sdk.KeyboardSDK;
-import com.omega.keyboard.sdk.callback.GetCustomThemeListCallback;
 import com.omega.keyboard.sdk.callback.LoadImageCallback;
 import com.omega.keyboard.sdk.model.CustomTheme;
 import com.orhanobut.logger.Logger;
@@ -77,18 +76,8 @@ public class CustomThemeAdapter extends RecyclerView.Adapter<CustomThemeAdapter.
 
 	public void refresh(int type) {
 		this.type = type;
-		keyboardSDK.getCustomThemeList(type, new GetCustomThemeListCallback() {
-			@Override
-			public void onGetCustomThemeList(boolean success, int type, List<CustomTheme> list) {
-				if (success) {
-					customThemes = list;
-				}
-				else {
-					customThemes = null;
-				}
-				notifyDataSetChanged();
-			}
-		});
+		customThemes = keyboardSDK.getCustomThemeList(type);
+		notifyDataSetChanged();
 	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

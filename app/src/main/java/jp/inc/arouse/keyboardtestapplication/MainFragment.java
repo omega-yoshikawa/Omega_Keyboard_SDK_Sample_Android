@@ -247,6 +247,10 @@ public class MainFragment extends Fragment {
 				}
 				// 選択 → 編集
 				else {
+					if (!keyboardSDK.canRemoveCustomTheme()) {
+						Toast.makeText(getContext(), "テーマを削除できません", Toast.LENGTH_SHORT).show();
+						return;
+					}
 					customThemeAdapter.setEditing(true);
 					editButton.setText("完了");
 					Toast.makeText(getContext(), "タップして削除", Toast.LENGTH_SHORT).show();
@@ -264,10 +268,18 @@ public class MainFragment extends Fragment {
 				// 編集
 				if (customThemeAdapter.isEditing()) {
 					if (customTheme.isPreset() || customTheme.isSelected()) {
+						Toast.makeText(getContext(), "テーマを削除できません", Toast.LENGTH_SHORT).show();
 						return;
 					}
 					keyboardSDK.removeCustomTheme(customTheme);
-					Toast.makeText(getContext(), "カスタムテーマを削除しました", Toast.LENGTH_SHORT).show();
+					if (keyboardSDK.canRemoveCustomTheme()) {
+						Toast.makeText(getContext(), "カスタムテーマを削除しました", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						customThemeAdapter.setEditing(false);
+						editButton.setText("編集");
+						Toast.makeText(getContext(), "カスタムテーマを削除しました\nこれ以上テーマを削除できません。", Toast.LENGTH_SHORT).show();
+					}
 				}
 				// 選択
 				else {
@@ -289,7 +301,7 @@ public class MainFragment extends Fragment {
 	}
 
 	@SuppressWarnings("unused")
-	@Subscribe(sticky = true)
+	@Subscribe
 	public void onReceiveCreateThemeEvent(CreateCustomThemeEvent event) {
 		switch (event.getCustomTheme().getType()) {
 			case CustomTheme.TYPE_PRESET_IMAGE:

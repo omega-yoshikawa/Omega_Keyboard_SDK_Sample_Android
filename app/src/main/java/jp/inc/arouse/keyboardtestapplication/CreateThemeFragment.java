@@ -18,6 +18,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,6 @@ import bolts.TaskCompletionSource;
 
 public class CreateThemeFragment extends Fragment {
 
-	private Toolbar toolbar;
 	private ImageCropView imageCropView;
 	private AppCompatImageView previewKeyboardImageView;
 
@@ -78,6 +79,13 @@ public class CreateThemeFragment extends Fragment {
 		return fragment;
 	}
 
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setHasOptionsMenu(true);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,30 +97,32 @@ public class CreateThemeFragment extends Fragment {
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+
+		inflater.inflate(R.menu.create_theme, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_create:
+				if (isLoading) {
+					return false;
+				}
+				else {
+					createTheme();
+					return true;
+				}
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		toolbar = findViewById(R.id.toolbar);
-		toolbar.setTitle("カスタムテーマ作成");
-		toolbar.inflateMenu(R.menu.create_theme);
-		toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				switch (item.getItemId()) {
-					case R.id.menu_create:
-						if (isLoading) {
-							return false;
-						}
-						else {
-							createTheme();
-							return true;
-						}
-
-					default:
-						return false;
-				}
-			}
-		});
 
 		progressBar = findViewById(R.id.preview_progress_bar);
 
@@ -222,6 +232,13 @@ public class CreateThemeFragment extends Fragment {
 		loadImage(galleryAdapter.getFirstImageInfo());
 	}
 
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		getActivity().setTitle("テーマ作成");
+	}
+
 	@SuppressWarnings("unchecked")
 	private <V extends View> V findViewById(@IdRes int id) {
 		if (getView() == null) {
@@ -306,7 +323,7 @@ public class CreateThemeFragment extends Fragment {
 									progressDialog.dismiss();
 									if (success) {
 										Toast.makeText(getContext(), "カスタムテーマを作成しました", Toast.LENGTH_SHORT).show();
-										EventBus.getDefault().postSticky(new CreateCustomThemeEvent(customTheme));
+										EventBus.getDefault().post(new CreateCustomThemeEvent(customTheme));
 										getFragmentManager().popBackStack();
 									}
 									else {
