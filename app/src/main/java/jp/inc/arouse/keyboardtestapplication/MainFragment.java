@@ -122,7 +122,7 @@ public class MainFragment extends Fragment {
 				ArrayList<Integer> addContents = Lists.newArrayList(
 						R.xml.pref_custom_settings_001
 				);
-				SettingsFragment settingsFragment = SettingsFragment.newInstance(addContents);
+				SettingsFragment settingsFragment = SettingsFragment.newInstance(R.id.container, addContents);
 				showFragment(settingsFragment);
 				return true;
 

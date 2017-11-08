@@ -36,6 +36,7 @@ public class CustomSettingsFragment extends SettingsFragment {
 		);
 
 		Bundle args = new Bundle();
+		args.putInt(SettingsFragment.ARG_CONTAINER_ID, R.id.container);
 		args.putIntegerArrayList(SettingsFragment.ARG_ADD_CONTENTS, addContents);
 
 		fragment.setArguments(args);
@@ -68,7 +69,7 @@ public class CustomSettingsFragment extends SettingsFragment {
 			preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-					SettingsFragment nextFragment = SettingsFragment.newInstance(PreferencePage.SDK_SOFTWARE_KEYBOARD, Lists.newArrayList(R.xml.pref_custom_settings_001));
+					SettingsFragment nextFragment = SettingsFragment.newInstance(R.id.container, PreferencePage.SDK_SOFTWARE_KEYBOARD, Lists.newArrayList(R.xml.pref_custom_settings_001));
 
 					FragmentTransaction transaction = getFragmentManager().beginTransaction();
 					transaction.replace(R.id.container, nextFragment, "pref_custom_settings_007");
