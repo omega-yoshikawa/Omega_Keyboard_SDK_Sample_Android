@@ -72,6 +72,7 @@ public class CustomSettingsFragment extends SettingsFragment {
 					SettingsFragment nextFragment = SettingsFragment.newInstance(R.id.container, PreferencePage.SDK_SOFTWARE_KEYBOARD, Lists.newArrayList(R.xml.pref_custom_settings_001));
 
 					FragmentTransaction transaction = getFragmentManager().beginTransaction();
+					transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 					transaction.replace(R.id.container, nextFragment, "pref_custom_settings_007");
 					transaction.addToBackStack("pref_custom_settings_007");
 					transaction.commit();

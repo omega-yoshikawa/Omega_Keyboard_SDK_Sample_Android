@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "jp.inc.arouse.keyboardtestapplication"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0.0"
         multiDexEnabled true
@@ -22,7 +22,7 @@ android {
 }
 
 repositories {
-    maven { url 'https://maven.google.com' }
+    google()
     maven { url "https://jitpack.io" }
 }
 
@@ -45,11 +45,11 @@ dependencies {
     // app
     //-----------------------
     // support
-    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
     // play services
     implementation 'com.google.android.gms:play-services-ads:11.6.0'
     // Preference
-    implementation 'com.takisoft.fix:preference-v7:25.4.0.3'
+    implementation 'com.takisoft.fix:preference-v7:27.0.0.0'
     // guava
     implementation 'com.google.guava:guava:23.2-android'
     // Logger

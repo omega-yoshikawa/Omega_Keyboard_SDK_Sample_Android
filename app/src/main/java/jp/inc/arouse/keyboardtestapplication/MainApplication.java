@@ -1,13 +1,10 @@
 package jp.inc.arouse.keyboardtestapplication;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 
 import com.omega.keyboard.sdk.InitializeParameter;
 import com.omega.keyboard.sdk.KeyboardApplication;
 import com.omega.keyboard.sdk.KeyboardSDK;
-import com.omega.keyboard.sdk.callback.CreateThemeCallback;
-import com.omega.keyboard.sdk.model.CustomTheme;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.LogAdapter;
@@ -53,12 +50,6 @@ public class MainApplication extends KeyboardApplication {
 
 	@Override
 	protected void onInitSDK(@NonNull final KeyboardSDK keyboardSDK) {
-		keyboardSDK.addPresetTheme(R.drawable.default_keyboard_background, Color.BLUE, Color.RED, new CreateThemeCallback() {
-			@Override
-			public void onComplete(boolean success, CustomTheme customTheme) {
-				keyboardSDK.setCurrentCustomTheme(customTheme);
-			}
-		});
 	}
 
 	@NonNull

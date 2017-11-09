@@ -192,6 +192,7 @@ public class MainFragment extends Fragment {
 
 	private <F extends Fragment> void showFragment(F fragment) {
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		transaction.replace(R.id.container, fragment, fragment.getClass().getName());
 		transaction.addToBackStack(fragment.getClass().getName());
 		transaction.commit();
@@ -297,7 +298,7 @@ public class MainFragment extends Fragment {
 		if (getView() == null) {
 			return null;
 		}
-		return (V)getView().findViewById(id);
+		return getView().findViewById(id);
 	}
 
 	@SuppressWarnings("unused")
