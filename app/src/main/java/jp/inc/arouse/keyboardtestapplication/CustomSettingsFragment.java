@@ -6,14 +6,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.Preference;
+import android.text.TextUtils;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.common.collect.Lists;
+import com.omega.keyboard.sdk.KeyboardSDK;
 import com.omega.keyboard.sdk.fragment.dialog.alert.AlertDialogFragment;
 import com.omega.keyboard.sdk.fragment.settings.SettingsFragment;
 import com.omega.keyboard.sdk.mozc.preference.PreferencePage;
+import com.takisoft.fix.support.v7.preference.EditTextPreference;
 
 import java.util.ArrayList;
 
@@ -103,6 +106,25 @@ public class CustomSettingsFragment extends SettingsFragment {
 			});
 		}
 
+		preference = findPreference(SharedPrefKey.USER_ID);
+		if (preference != null) {
+			EditTextPreference editTextPreference = (EditTextPreference)preference;
+			editTextPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+				@Override
+				public boolean onPreferenceChange(Preference preference, Object newValue) {
+					String userId = String.valueOf(newValue);
+
+					KeyboardSDK keyboardSDK = KeyboardSDK.sharedInstance(getContext());
+					if (TextUtils.isEmpty(userId)) {
+						keyboardSDK.deleteUserId();
+					}
+					else {
+						keyboardSDK.setUserId(userId);
+					}
+					return true;
+				}
+			});
+		}
 	}
 
 	private void onClickColorPickerPreference(Preference preference) {

@@ -10,6 +10,8 @@ package jp.inc.arouse.keyboardtestapplication;
 
 public interface SharedPrefKey {
 
+	String USER_ID = "pref_user_id";
+
 	String AD_VIEW_BACKGROUND_COLOR = "pref_ad_view_background_color";
 	String AD_VIEW_TEXT_COLOR = "pref_ad_view_text_color";
 	String AD_VIEW_SUGGEST_COUNT = "pref_ad_view_suggest_count";

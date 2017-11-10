@@ -82,6 +82,11 @@ public class SplashFragment extends Fragment {
 
 
 	private void createPresetThemes() {
+		if (keyboardSDK.getNumCustomThemes(CustomTheme.TYPE_PRESET_IMAGE) > 0) {
+			createThemeCount = PRESET_THEME_COUNT;
+			checkTransition();
+			return;
+		}
 		keyboardSDK.addPresetTheme(R.drawable.default_keyboard_background, Color.BLUE, Color.RED, new CreateThemeCallback() {
 			@Override
 			public void onComplete(boolean success, CustomTheme customTheme) {
