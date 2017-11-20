@@ -185,6 +185,11 @@ public class MainFragment extends Fragment {
 				keyboardSDK.startCreateThemeActivityForResult(MainFragment.this, REQUEST_CODE_CREATE_THEME, textColors, lineColors);
 				return true;
 
+			case R.id.menu_movie_reward:
+				MovieRewardFragment movieRewardFragment = MovieRewardFragment.newInstance();
+				showFragment(movieRewardFragment);
+				return true;
+
 			default:
 				return false;
 		}

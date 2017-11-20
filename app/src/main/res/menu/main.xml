@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_movie_reward"
+        android:icon="@android:drawable/presence_video_online"
+        android:title="動画リワード"
+        app:showAsAction="always" />
+
+    <item
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="設定"
         app:showAsAction="always">
