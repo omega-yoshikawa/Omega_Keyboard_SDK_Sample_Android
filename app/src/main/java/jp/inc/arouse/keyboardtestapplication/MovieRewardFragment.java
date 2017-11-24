@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.omega.keyboard.sdk.KeyboardSDK;
-import com.omega.keyboard.sdk.callback.MovieRewardCallback;
-import com.omega.keyboard.sdk.config.MovieRewardFailureReason;
+import com.omega.keyboard.sdk.callback.MovieRewardGetPointCallback;
+import com.omega.keyboard.sdk.callback.MovieRewardListener;
+import com.omega.keyboard.sdk.callback.MovieRewardPlayCallback;
+import com.omega.keyboard.sdk.config.MovieRewardPlayFailureReason;
 
 /**
  * jp.inc.arouse.keyboardtestapplication<br>
@@ -26,6 +29,8 @@ import com.omega.keyboard.sdk.config.MovieRewardFailureReason;
 public class MovieRewardFragment extends Fragment {
 
 	private KeyboardSDK keyboardSDK;
+
+	private AppCompatButton playMovieRewardButton;
 
 	public static MovieRewardFragment newInstance() {
 		MovieRewardFragment fragment = new MovieRewardFragment();
@@ -57,7 +62,21 @@ public class MovieRewardFragment extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		keyboardSDK.setupMovieReward(getActivity());
+		keyboardSDK.setupMovieReward(getActivity(), new MovieRewardListener() {
+			@Override
+			public void onChangeCanShow(boolean canShow) {
+				if (canShow) {
+					Toast.makeText(getContext(), "動画リワード再生が可能になりました", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(getContext(), "動画リワード再生ができなくなりました", Toast.LENGTH_SHORT).show();
+				}
+
+				if (playMovieRewardButton != null) {
+					playMovieRewardButton.setEnabled(canShow);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -85,53 +104,72 @@ public class MovieRewardFragment extends Fragment {
 					}
 				});
 
-		view.findViewById(R.id.show_reward_button)
-				.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						keyboardSDK.showMovieReward(new MovieRewardCallback() {
-							@Override
-							public void onSuccess(int getPoint) {
-								Toast.makeText(getContext(), "動画リワード 完了 [" + getPoint + "pt]", Toast.LENGTH_SHORT).show();
-							}
+		playMovieRewardButton = view.findViewById(R.id.show_reward_button);
+		playMovieRewardButton.setEnabled(false);
+		playMovieRewardButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				playReward();
+			}
+		});
+	}
 
-							@Override
-							public void onCancel() {
-								Toast.makeText(getContext(), "動画リワード キャンセル", Toast.LENGTH_SHORT).show();
-							}
+	private void playReward() {
+		keyboardSDK.showMovieReward(new MovieRewardPlayCallback() {
+			@Override
+			public void onFinishPlay() {
+				Toast.makeText(getContext(), "動画リワード 再生完了", Toast.LENGTH_SHORT).show();
 
-							@Override
-							public void onFailure(MovieRewardFailureReason reason) {
-								String message;
-								switch (reason) {
-									case OTHER:
-										message = "通信エラー等";
-										break;
+				getRewardPoint();
+			}
 
-									case NOT_LOGIN:
-										message = "ログインしていない";
-										break;
+			@Override
+			public void onCancel() {
+				Toast.makeText(getContext(), "動画リワード 再生キャンセル", Toast.LENGTH_SHORT).show();
+			}
 
-									case NOT_INIT_SDK:
-										message = "パラメータが設定されていない";
-										break;
+			@Override
+			public void onFailure(MovieRewardPlayFailureReason reason) {
+				String reasonMessage;
+				switch (reason) {
+					case NOT_INIT_SDK:
+						reasonMessage = "SDKが初期化されていない";
+						break;
 
-									case EMPTY_ADS:
-										message = "再生できるリワードがない";
-										break;
+					case NOT_LOGIN:
+						reasonMessage = "ログインしていない";
+						break;
 
-									case PLAY_LIMIT:
-										message = "再生回数上限";
-										break;
+					case EMPTY_ADS:
+						reasonMessage = "再生できる動画がない";
+						break;
 
-									default:
-										message = "Unknown";
-										break;
-								}
-								Toast.makeText(getContext(), "動画リワード 失敗 [" + message + "]", Toast.LENGTH_SHORT).show();
-							}
-						});
-					}
-				});
+					default:
+						reasonMessage = "通信エラー等";
+						break;
+				}
+
+				Toast.makeText(getContext(), "動画リワード 再生失敗 [" + reasonMessage + "]", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	private void getRewardPoint() {
+		keyboardSDK.getMovieRewardPoint(new MovieRewardGetPointCallback() {
+			@Override
+			public void onSuccess(int point) {
+				Toast.makeText(getContext(), "動画リワード ポイント獲得 [" + point + "pt]", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onLimitPlay() {
+				Toast.makeText(getContext(), "動画リワード ポイント獲得失敗 [再生回数上限]", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onFailure() {
+				Toast.makeText(getContext(), "動画リワード ポイント獲得失敗 [通信エラー等]", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 }
