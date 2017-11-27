@@ -10,6 +10,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_notice"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="お知らせ"
+        app:showAsAction="always" />
+
+    <item
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="設定"
         app:showAsAction="always">

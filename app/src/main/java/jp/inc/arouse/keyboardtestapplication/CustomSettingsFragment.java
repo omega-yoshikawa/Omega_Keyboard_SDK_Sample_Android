@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.Preference;
 import android.text.TextUtils;
@@ -44,6 +45,13 @@ public class CustomSettingsFragment extends SettingsFragment {
 
 		fragment.setArguments(args);
 		return fragment;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		getActivity().setTitle("設定");
 	}
 
 	@Override

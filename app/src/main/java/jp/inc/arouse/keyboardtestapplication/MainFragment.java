@@ -190,6 +190,11 @@ public class MainFragment extends Fragment {
 				showFragment(movieRewardFragment);
 				return true;
 
+			case R.id.menu_notice:
+				NoticeFragment noticeFragment = NoticeFragment.newInstance();
+				showFragment(noticeFragment);
+				return true;
+
 			default:
 				return false;
 		}
