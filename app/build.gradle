@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "jp.inc.arouse.keyboardtestapplication"
         minSdkVersion 16
@@ -46,6 +46,7 @@ dependencies {
     //-----------------------
     // support
     implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:exifinterface:27.0.2'
     // play services
     implementation 'com.google.android.gms:play-services-ads:11.6.2'
     // Preference
