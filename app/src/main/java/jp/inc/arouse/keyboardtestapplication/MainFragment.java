@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 import com.omega.keyboard.sdk.KeyboardSDK;
+import com.omega.keyboard.sdk.fragment.dialog.alert.AlertDialogFragment;
 import com.omega.keyboard.sdk.fragment.settings.SettingsFragment;
 import com.omega.keyboard.sdk.model.CustomTheme;
+import com.omega.keyboard.sdk.util.PermissionUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -140,6 +142,11 @@ public class MainFragment extends Fragment {
 				return true;
 
 			case R.id.menu_create_theme_in_app:
+				PermissionUtil permissionUtil = PermissionUtil.sharedInstance(getContext());
+				if (!permissionUtil.isPermit()) {
+					Toast.makeText(getContext(), "必要なパーミッションが許可されていません。\nActivate画面からパーミッションの許可をしてください。", Toast.LENGTH_SHORT).show();
+					return true;
+				}
 				CreateThemeFragment createThemeFragment = CreateThemeFragment.newInstance();
 				showFragment(createThemeFragment);
 				return true;
