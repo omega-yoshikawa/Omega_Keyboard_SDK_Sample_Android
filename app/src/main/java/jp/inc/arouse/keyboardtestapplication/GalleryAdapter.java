@@ -36,6 +36,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
 	private int idColumn;
 	private int orientationColumn;
+	private int dataColumn;
 
 	private OnItemClickListener onItemClickListener;
 	private DataSetObserver dataSetObserver = new DataSetObserver() {
@@ -43,16 +44,28 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 		public void onChanged() {
 			super.onChanged();
 
-			isDataValid = true;
-			notifyItemRangeChanged(0, cursor.getCount());
+			Task.call(new Callable<Void>() {
+				@Override
+				public Void call() throws Exception {
+					isDataValid = true;
+					notifyItemRangeChanged(0, cursor.getCount());
+					return null;
+				}
+			}, Task.UI_THREAD_EXECUTOR);
 		}
 
 		@Override
 		public void onInvalidated() {
 			super.onInvalidated();
 
-			isDataValid = true;
-			notifyDataSetChanged();
+			Task.call(new Callable<Void>() {
+				@Override
+				public Void call() throws Exception {
+					isDataValid = true;
+					notifyDataSetChanged();
+					return null;
+				}
+			}, Task.UI_THREAD_EXECUTOR);
 		}
 	};
 
@@ -73,8 +86,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 		}
 
 		isDataValid = true;
-		this.idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID);
-		this.orientationColumn = cursor.getColumnIndex(MediaStore.Images.Media.ORIENTATION);
+		idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+		orientationColumn = cursor.getColumnIndex(MediaStore.Images.Media.ORIENTATION);
+		dataColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
 		cursor.registerDataSetObserver(dataSetObserver);
 	}
 
@@ -102,6 +116,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 			isDataValid = true;
 			idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID);
 			orientationColumn = cursor.getColumnIndex(MediaStore.Images.Media.ORIENTATION);
+			dataColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
 			cursor.registerDataSetObserver(dataSetObserver);
 		}
 		else {
@@ -123,6 +138,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 			isDataValid = true;
 			idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID);
 			orientationColumn = cursor.getColumnIndex(MediaStore.Images.Media.ORIENTATION);
+			dataColumn = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
 			cursor.registerDataSetObserver(dataSetObserver);
 		}
 
@@ -144,7 +160,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 			return null;
 		}
 		if (cursor.moveToFirst()) {
-			return new ImageInfo(cursor.getLong(idColumn), cursor.getInt(orientationColumn));
+			return new ImageInfo(cursor.getLong(idColumn), cursor.getInt(orientationColumn), cursor.getString(dataColumn));
 		}
 		else {
 			return null;
@@ -184,7 +200,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		if (cursor.moveToPosition(position)) {
-			holder.onBind(new ImageInfo(cursor.getLong(idColumn), cursor.getInt(orientationColumn)));
+			holder.onBind(new ImageInfo(cursor.getLong(idColumn), cursor.getInt(orientationColumn), cursor.getString(dataColumn)));
 		}
 		else {
 			holder.onError();

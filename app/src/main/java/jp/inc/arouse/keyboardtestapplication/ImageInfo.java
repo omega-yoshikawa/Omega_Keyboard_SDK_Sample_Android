@@ -15,5 +15,6 @@ public class ImageInfo {
 
 	private long id;
 	private int orientation;
+	private String data;
 
 }

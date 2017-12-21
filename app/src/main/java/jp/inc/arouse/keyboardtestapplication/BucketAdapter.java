@@ -16,6 +16,9 @@ import com.google.common.collect.Sets;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import bolts.Task;
 
 /**
  * jp.inc.arouse.keyboardtestapplication<br>
@@ -71,14 +74,26 @@ public class BucketAdapter extends BaseAdapter {
 				public void onChanged() {
 					super.onChanged();
 
-					updateBuckets();
+					Task.call(new Callable<Void>() {
+						@Override
+						public Void call() throws Exception {
+							updateBuckets();
+							return null;
+						}
+					}, Task.UI_THREAD_EXECUTOR);
 				}
 
 				@Override
 				public void onInvalidated() {
 					super.onInvalidated();
 
-					updateBuckets();
+					Task.call(new Callable<Void>() {
+						@Override
+						public Void call() throws Exception {
+							updateBuckets();
+							return null;
+						}
+					}, Task.UI_THREAD_EXECUTOR);
 				}
 			});
 			this.buckets.addAll(buckets);

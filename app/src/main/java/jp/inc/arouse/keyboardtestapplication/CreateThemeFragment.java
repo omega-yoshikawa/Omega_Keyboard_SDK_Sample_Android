@@ -1,9 +1,11 @@
 package jp.inc.arouse.keyboardtestapplication;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -17,6 +19,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +42,8 @@ import com.omega.keyboard.sdk.mozc.keyboard.Keyboard;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.util.concurrent.Callable;
 
 import bolts.Continuation;
@@ -161,7 +166,7 @@ public class CreateThemeFragment extends Fragment {
 		});
 
 		RecyclerView recyclerView = findViewById(R.id.recycler_view);
-		GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
+		GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 5);
 		recyclerView.setLayoutManager(layoutManager);
 
 		galleryAdapter = new GalleryAdapter(getContext());
@@ -263,8 +268,32 @@ public class CreateThemeFragment extends Fragment {
 		Task.callInBackground(new Callable<Bitmap>() {
 			@Override
 			public Bitmap call() throws Exception {
-				Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageInfo.getId());
-				return MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+				ContentResolver contentResolver = getContext().getContentResolver();
+
+				Uri uri = Uri.parse("file://" + imageInfo.getData());
+				InputStream inputStream = contentResolver.openInputStream(uri);
+
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inJustDecodeBounds = true;
+				BitmapFactory.decodeStream(inputStream, null, options);
+
+				DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+				int maxWidth = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels);
+				int bitmapWidth = imageInfo.getOrientation() == 90 || imageInfo.getOrientation() == 270 ? options.outHeight : options.outWidth;
+
+				// サイズ調整
+				if (maxWidth < bitmapWidth) {
+					int sampleSize = 1;
+					while (bitmapWidth / sampleSize >= maxWidth) {
+						sampleSize *= 2;
+					}
+					sampleSize /= 2; // 小さくしすぎた分を元に戻す
+					options.inSampleSize = sampleSize;
+				}
+
+				options.inJustDecodeBounds = false;
+				BufferedInputStream bufferedInputStream = new BufferedInputStream(contentResolver.openInputStream(uri));
+				return BitmapFactory.decodeStream(bufferedInputStream, null, options);
 			}
 		})
 				.onSuccess(new Continuation<Bitmap, Bitmap>() {
@@ -297,8 +326,10 @@ public class CreateThemeFragment extends Fragment {
 									.show();
 						}
 						else {
+							imageCropView.resetMatrix();
 							imageCropView.setImageBitmap(task.getResult());
 						}
+						System.gc();
 						return null;
 					}
 				}, Task.UI_THREAD_EXECUTOR);
