@@ -1,5 +1,6 @@
 package jp.inc.arouse.keyboardtestapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,9 +37,9 @@ public class ActivateFragment extends Fragment {
 
 	public static ActivateFragment newInstance() {
 		ActivateFragment fragment = new ActivateFragment();
-		
+
 		Bundle args = new Bundle();
-		
+
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -178,8 +179,27 @@ public class ActivateFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (keyboardUtil != null) {
-			keyboardUtil.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case REQUEST_CODE_CHECK_PERMISSIONS:
+				String permissionMessage = resultCode == Activity.RESULT_OK ? "許可しました" : "許可しませんでした";
+				showToast(permissionMessage);
+				break;
+
+			case REQUEST_CODE_CHECK_ENABLED:
+				String enabledMessage = resultCode == Activity.RESULT_OK ? "有効化しました" : "有効化をキャンセルしました";
+				showToast(enabledMessage);
+				break;
+
+			case REQUEST_CODE_CHECK_SELECTED:
+				String selectedMessage = resultCode == Activity.RESULT_OK ? "選択しました" : "選択をキャンセルしました";
+				showToast(selectedMessage);
+				break;
+
+			default:
+				if (keyboardUtil != null) {
+					keyboardUtil.onActivityResult(requestCode, resultCode, data);
+				}
+				break;
 		}
 	}
 
