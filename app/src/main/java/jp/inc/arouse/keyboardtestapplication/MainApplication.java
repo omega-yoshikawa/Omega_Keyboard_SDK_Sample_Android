@@ -59,6 +59,7 @@ public class MainApplication extends KeyboardApplication {
 				.applicationInfo(getString(R.string.app_name), "arouse, inc.", getString(R.string.user_dictionary_export_provider))
 				.adInfo(Define.SYMBOL, Define.TOKEN)
 				.mediaId(Define.MEDIA_ID)
+				.zoneId(Define.ZONE_ID)
 				.sdkKey(Define.SDK_KEY)
 				.isDebug(true)
 				.build();

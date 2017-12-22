@@ -19,6 +19,7 @@ public interface Define {
 	String SYMBOL = "ECnavi-Android";
 	String TOKEN = "79580e4d3ec6deddf19a58459bf2de86";
 
-	String MEDIA_ID = "m868e72c8646e0ddc3709069cc2743d7c";
+	String MEDIA_ID = "m57f5c13ac8ab1e12d872df970f549a47";
+	String ZONE_ID = "z7529309ac3ca9aaf83c6a7b00ec5c45e";
 	String SDK_KEY = "6731kvw7npX25psFGwczRLTb5I4HXfFeoJfVCad-NA1TzuiDoJBEekql0v0TZFBLTrrmPTkodmGbdzqQH_exiT";
 }
