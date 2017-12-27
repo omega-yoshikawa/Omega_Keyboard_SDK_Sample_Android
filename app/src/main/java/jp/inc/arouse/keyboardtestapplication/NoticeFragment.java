@@ -148,6 +148,9 @@ public class NoticeFragment extends Fragment {
 		keyboardSDK.checkNewNotice(new CheckNewNoticeCallback() {
 			@Override
 			public void onSuccess(boolean hasNewNotice, String newNoticeURL) {
+				if (getContext() == null) {
+					return;
+				}
 				if (hasNewNotice) {
 					newNoticeLayout.setVisibility(View.VISIBLE);
 					Toast.makeText(getContext(), "新着のお知らせがあります\n" + newNoticeURL, Toast.LENGTH_SHORT).show();
@@ -160,6 +163,9 @@ public class NoticeFragment extends Fragment {
 
 			@Override
 			public void onFailure() {
+				if (getContext() == null) {
+					return;
+				}
 				Toast.makeText(getContext(), "お知らせ情報の取得に失敗しました", Toast.LENGTH_SHORT).show();
 			}
 		});

@@ -5,6 +5,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material.Fix</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar.Style</item>
+        <item name="actionBarTheme">@style/Widget.ActionBar.Theme</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -12,30 +14,38 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material.Fix</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar.Style</item>
+        <item name="actionBarTheme">@style/Widget.ActionBar.Theme</item>
     </style>
 
     <style name="AppTheme.Keyboard" parent="KeyboardTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarStyle">@style/Widget.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar.Style</item>
+        <item name="actionBarTheme">@style/Widget.ActionBar.Theme</item>
     </style>
 
     <style name="AppTheme.Keyboard.NoActionBar" parent="KeyboardTheme.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarStyle">@style/Widget.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.ActionBar.Style</item>
+        <item name="actionBarTheme">@style/Widget.ActionBar.Theme</item>
     </style>
 
-    <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+    <style name="Widget.ActionBar.Style" parent="Widget.AppCompat.Light.ActionBar.Solid">
         <item name="titleTextStyle">@style/TextAppearance.Widget.Actionbar.Title</item>
     </style>
 
     <style name="TextAppearance.Widget.Actionbar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">#FFF</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="Widget.ActionBar.Theme" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="colorControlNormal">#FFF</item>
+    </style>
 
 </resources>
