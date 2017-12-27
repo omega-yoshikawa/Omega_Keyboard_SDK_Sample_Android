@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 import com.omega.keyboard.sdk.KeyboardSDK;
-import com.omega.keyboard.sdk.fragment.dialog.alert.AlertDialogFragment;
 import com.omega.keyboard.sdk.fragment.settings.SettingsFragment;
 import com.omega.keyboard.sdk.model.CustomTheme;
 import com.omega.keyboard.sdk.util.PermissionUtil;
@@ -58,7 +57,9 @@ public class MainFragment extends Fragment {
 	private KeyboardSDK keyboardSDK;
 
 	private AppCompatSpinner typeSpinner;
+	private AppCompatSpinner sortSpinner;
 	private ArrayAdapter<String> typeAdapter;
+	private ArrayAdapter<String> sortAdapter;
 	private RecyclerView recyclerView;
 	private CustomThemeAdapter customThemeAdapter;
 	private AppCompatButton editButton;
@@ -235,13 +236,43 @@ public class MainFragment extends Fragment {
 		typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				CustomTheme.Sort sort = sortSpinner.getSelectedItemPosition() == 0 ? CustomTheme.Sort.ASCENDING : CustomTheme.Sort.DESCENDING;
 				switch (position) {
 					case 0:
-						customThemeAdapter.refresh(CustomTheme.TYPE_PRESET_IMAGE);
+						customThemeAdapter.refresh(CustomTheme.TYPE_PRESET_IMAGE, sort);
 						break;
 
 					case 1:
-						customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE);
+						customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE, sort);
+						break;
+
+					default:
+						break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+			}
+		});
+
+		sortSpinner = findViewById(R.id.sort_spinner);
+		sortAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{
+				"ASC",
+				"DESC"
+		});
+		sortSpinner.setAdapter(sortAdapter);
+		sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				int type = typeSpinner.getSelectedItemPosition() == 0 ? CustomTheme.TYPE_PRESET_IMAGE : CustomTheme.TYPE_USER_IMAGE;
+				switch (position) {
+					case 0:
+						customThemeAdapter.refresh(type, CustomTheme.Sort.ASCENDING);
+						break;
+
+					case 1:
+						customThemeAdapter.refresh(type, CustomTheme.Sort.DESCENDING);
 						break;
 
 					default:
@@ -324,12 +355,14 @@ public class MainFragment extends Fragment {
 		switch (event.getCustomTheme().getType()) {
 			case CustomTheme.TYPE_PRESET_IMAGE:
 				typeSpinner.setSelection(0);
-				customThemeAdapter.refresh(CustomTheme.TYPE_PRESET_IMAGE);
+				sortSpinner.setSelection(0);
+				customThemeAdapter.refresh(CustomTheme.TYPE_PRESET_IMAGE, CustomTheme.Sort.ASCENDING);
 				break;
 
 			case CustomTheme.TYPE_USER_IMAGE:
 				typeSpinner.setSelection(1);
-				customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE);
+				sortSpinner.setSelection(1);
+				customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE, CustomTheme.Sort.DESCENDING);
 				break;
 
 			default:
@@ -351,7 +384,8 @@ public class MainFragment extends Fragment {
 							@Override
 							public void run() {
 								typeSpinner.setSelection(1);
-								customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE);
+								sortSpinner.setSelection(1);
+								customThemeAdapter.refresh(CustomTheme.TYPE_USER_IMAGE, CustomTheme.Sort.DESCENDING);
 							}
 						}, 100);
 						break;

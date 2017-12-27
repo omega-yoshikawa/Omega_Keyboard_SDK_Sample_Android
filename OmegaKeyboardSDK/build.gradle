@@ -1,2 +1,2 @@
 configurations.maybeCreate("default")
-artifacts.add("default", file('OmegaKeyboardSDK-1.4.0.aar'))
+artifacts.add("default", file('OmegaKeyboardSDK-1.4.1.aar'))

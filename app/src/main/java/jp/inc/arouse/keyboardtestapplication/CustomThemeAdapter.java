@@ -41,6 +41,7 @@ public class CustomThemeAdapter extends RecyclerView.Adapter<CustomThemeAdapter.
 	private final float scaledDensity;
 
 	private int type;
+	private CustomTheme.Sort sort;
 	private boolean editing = false;
 	private List<CustomTheme> customThemes;
 
@@ -55,7 +56,7 @@ public class CustomThemeAdapter extends RecyclerView.Adapter<CustomThemeAdapter.
 
 		this.scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
 
-		refresh(CustomTheme.TYPE_PRESET_IMAGE);
+		refresh(CustomTheme.TYPE_PRESET_IMAGE, CustomTheme.Sort.ASCENDING);
 	}
 
 	public boolean isEditing() {
@@ -71,12 +72,13 @@ public class CustomThemeAdapter extends RecyclerView.Adapter<CustomThemeAdapter.
 	}
 
 	public void refresh() {
-		refresh(type);
+		refresh(type, sort);
 	}
 
-	public void refresh(int type) {
+	public void refresh(int type, CustomTheme.Sort sort) {
 		this.type = type;
-		customThemes = keyboardSDK.getCustomThemeList(type);
+		this.sort = sort;
+		customThemes = keyboardSDK.getCustomThemeList(type, sort);
 		notifyDataSetChanged();
 	}
 
